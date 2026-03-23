@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#8B5CF6" />
+    <title>DailyQ · Referral</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      :root{
+        --primary:#8B5CF6;
+        --dark:#7C3AED;
+        --light:#A78BFA;
+        --pale:#EDE9FE;
+        --gold:#F59E0B;
+        --goldLight:#FDE68A;
+        --text:#1F2937;
+        --muted:rgba(107,114,128,1);
+      }
+
+      *{ box-sizing:border-box; }
+
+      body{
+        margin:0;
+        min-height:100vh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(1200px 700px at 85% 12%, rgba(253,230,138,0.40), rgba(253,230,138,0) 55%),
+          radial-gradient(900px 650px at 10% 88%, rgba(167,139,250,0.40), rgba(167,139,250,0) 55%),
+          linear-gradient(to bottom, #FAFAFF, #EEF2FF);
+        display:flex;
+        justify-content:center;
+        padding: 26px 14px 22px;
+      }
+
+      .bg-glow{
+        position:fixed;
+        inset:0;
+        pointer-events:none;
+        background:
+          radial-gradient(500px 260px at 50% -40px, rgba(124,58,237,0.12), rgba(124,58,237,0) 70%),
+          radial-gradient(340px 220px at -20px 55%, rgba(167,139,250,0.14), rgba(167,139,250,0) 70%);
+        filter:saturate(1.05);
+      }
+
+      .wrap{
+        width:100%;
+        max-width:420px;
+        position:relative;
+      }
+
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin: 2px 0 18px;
+      }
+
+      .logo{
+        width:44px;
+        height:44px;
+        border-radius:16px;
+        background: linear-gradient(135deg, rgba(167,139,250,0.35), rgba(139,92,246,0.25));
+        border: 1px solid rgba(139,92,246,0.18);
+        box-shadow:
+          0 18px 40px rgba(124,58,237,0.10),
+          0 2px 10px rgba(0,0,0,0.05);
+        backdrop-filter: blur(12px);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex: 0 0 auto;
+      }
+
+      .logo svg{ display:block; }
+
+      .brandTitle{
+        display:flex;
+        flex-direction:column;
+        line-height:1.05;
+      }
+
+      .brandTitle strong{
+        font-size:24px;
+        letter-spacing:-0.6px;
+      }
+
+      .brandTitle span{
+        font-size:13px;
+        color:var(--muted);
+        font-weight:600;
+        margin-top:4px;
+      }
+
+      .glass{
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(167,139,250,0.18);
+        border-radius: 32px;
+        box-shadow:
+          0 30px 70px rgba(139,92,246,0.10),
+          0 10px 30px rgba(0,0,0,0.05);
+        backdrop-filter: blur(18px);
+        position:relative;
+        overflow:hidden;
+      }
+
+      .glass:before{
+        content:"";
+        position:absolute;
+        inset:-2px;
+        background:
+          radial-gradient(600px 260px at 20% 0%, rgba(167,139,250,0.18), rgba(167,139,250,0) 55%),
+          radial-gradient(480px 220px at 110% 20%, rgba(124,58,237,0.14), rgba(124,58,237,0) 60%);
+        pointer-events:none;
+      }
+
+      .glassInner{
+        position:relative;
+        padding: 26px 22px;
+      }
+
+      .question{
+        font-size:18px;
+        text-align:center;
+        font-weight:700;
+        letter-spacing:-0.2px;
+        margin: 0 0 18px;
+        color: #2B1A5A;
+      }
+
+      .timeline{
+        display:flex;
+        flex-direction:column;
+        gap:14px;
+      }
+
+      .answerRow{
+        background: rgba(237,233,254,0.55);
+        border: 1px solid rgba(139,92,246,0.12);
+        border-radius: 22px;
+        padding: 14px 14px;
+      }
+
+      .answerTop{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:8px;
+      }
+
+      .yearBadge{
+        font-size:12px;
+        font-weight:800;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        color:#5B21B6;
+        background: rgba(167,139,250,0.22);
+        border: 1px solid rgba(167,139,250,0.30);
+        padding: 6px 10px;
+        border-radius: 9999px;
+      }
+
+      .answerText{
+        margin:0;
+        font-size:15px;
+        line-height:1.4;
+        color: rgba(31,41,55,1);
+        font-weight:600;
+      }
+
+      .belowCard{
+        margin-top: 18px;
+        text-align:center;
+      }
+
+      h2{
+        margin: 0 0 8px;
+        font-size:22px;
+        letter-spacing:-0.6px;
+        color: #2B1A5A;
+      }
+
+      .subline{
+        margin: 0;
+        font-size:14px;
+        color: var(--muted);
+        font-weight:600;
+        line-height:1.45;
+      }
+
+      .goldBadge{
+        margin: 18px auto 14px;
+        width: fit-content;
+        max-width:100%;
+        padding: 10px 14px;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, rgba(253,230,138,0.95), rgba(245,158,11,0.90));
+        border: 1px solid rgba(240,192,64,0.35);
+        box-shadow:
+          0 14px 34px rgba(245,158,11,0.18),
+          0 4px 14px rgba(0,0,0,0.06);
+        color: rgba(146,64,14,1);
+        font-weight:800;
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .goldBadge .crown{
+        font-size:16px;
+        line-height:1;
+      }
+
+      .storeCta{
+        display:flex;
+        justify-content:center;
+        margin-top: 14px;
+      }
+
+      .storeBtn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        padding: 14px 18px;
+        width: 100%;
+        border-radius: 9999px;
+        text-decoration:none;
+        background: linear-gradient(135deg, var(--dark), var(--primary));
+        color:#fff;
+        font-weight:800;
+        box-shadow:
+          0 18px 50px rgba(124,58,237,0.18),
+          0 8px 22px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.25);
+      }
+
+      .storeBtn:active{ transform: translateY(1px); }
+
+      .storeBtn .badgeArrow{
+        width: 28px;
+        height: 28px;
+        border-radius: 9999px;
+        background: rgba(255,255,255,0.18);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border: 1px solid rgba(255,255,255,0.18);
+      }
+
+      footer{
+        margin-top: 18px;
+        text-align:center;
+        font-size:12px;
+        color: rgba(107,114,128,1);
+        font-weight:700;
+      }
+
+      footer a{
+        color: rgba(124,58,237,1);
+        text-decoration:none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+
+      @media (max-width: 360px){
+        .glassInner{ padding: 22px 16px; }
+        .question{ font-size:16px; }
+        h2{ font-size:20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <header class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- Simple DailyQ mark (web-only). -->
+          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#A78BFA"/>
+                <stop offset="1" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+            <circle cx="11" cy="11" r="10" fill="url(#qg)" opacity="0.18"/>
+            <path d="M15.9 16.4 12.7 13.2c-.5.3-1.1.5-1.7.5-2 0-3.6-1.6-3.6-3.6S9 6.5 11 6.5s3.6 1.6 3.6 3.6c0 .6-.2 1.2-.5 1.7l3.2 3.2-1.4 1.4Z" fill="#7C3AED"/>
+            <path d="M11 8.2c-1 0-1.8.8-1.8 1.8S10 11.8 11 11.8s1.8-.8 1.8-1.8-.8-1.8-1.8-1.8Z" fill="#8B5CF6"/>
+          </svg>
+        </div>
+        <div class="brandTitle">
+          <strong>DailyQ</strong>
+          <span>One question a day</span>
+        </div>
+      </header>
+
+      <section class="glass">
+        <div class="glassInner">
+          <div class="question">Are you happy in love right now?</div>
+
+          <div class="timeline">
+            <div class="answerRow">
+              <div class="answerTop">
+                <div class="yearBadge">2025</div>
+              </div>
+              <p class="answerText">Single for a while now, been dating but kind of done with it honestly.</p>
+            </div>
+
+            <div class="answerRow">
+              <div class="answerTop">
+                <div class="yearBadge">2026</div>
+              </div>
+              <p class="answerText">YES!!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="belowCard">
+        <h2>Who were you this time last year?</h2>
+        <p class="subline">One question a day. A year later, see your answer.</p>
+
+        <div class="goldBadge" role="note" aria-label="Referral joker badge">
+          <span class="crown">👑</span>
+          <span>Your friend sent you a free joker</span>
+        </div>
+
+        <div class="storeCta">
+          <a class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ from the App Store">
+            <span class="badgeArrow" aria-hidden="true">↓</span>
+            <span>Download DailyQ</span>
+          </a>
+        </div>
+
+        <footer>© 2026 DailyQ · <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; Terms</a></footer>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var appStoreUrl = "https://apps.apple.com/app/id6759645677";
+
+        function getInviteCode() {
+          var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
+          var parts = path.split("/").filter(Boolean);
+          var inviteIndex = parts.indexOf("invite");
+          if (inviteIndex !== -1 && parts[inviteIndex + 1]) return parts[inviteIndex + 1];
+          return parts[parts.length - 1] || "";
+        }
+
+        var code = getInviteCode();
+        var deepLink = "dailyq://invite/" + encodeURIComponent(code);
+
+        var fallbackTimer = null;
+        var stopped = false;
+        function stopAndClear() {
+          if (stopped) return;
+          stopped = true;
+          if (fallbackTimer) window.clearTimeout(fallbackTimer);
+        }
+
+        fallbackTimer = window.setTimeout(function () {
+          stopAndClear();
+          window.location.replace(appStoreUrl);
+        }, 1500);
+
+        // If the app opens (or tab visibility changes), stop the fallback.
+        window.addEventListener("blur", stopAndClear, { once: true });
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "hidden") stopAndClear();
+        }, { passive: true });
+        window.addEventListener("pagehide", stopAndClear, { once: true });
+
+        try {
+          window.location.href = deepLink;
+        } catch (e) {
+          // If something blocks deep-link navigation, fallback will still happen.
+        }
+      })();
+    </script>
+  </body>
+</html>
+
