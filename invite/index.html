@@ -364,10 +364,13 @@
           if (fallbackTimer) window.clearTimeout(fallbackTimer);
         }
 
+        var isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent);
+        var delayMs = isIOS ? 6500 : 2500;
+
         fallbackTimer = window.setTimeout(function () {
           stopAndClear();
           window.location.replace(appStoreUrl);
-        }, 2500);
+        }, delayMs);
 
         // If the app opens (or tab visibility changes), stop the fallback.
         window.addEventListener("blur", stopAndClear, { once: true });
