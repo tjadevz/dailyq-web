@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#8B5CF6" />
+    <title>DailyQ · Referral</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      :root{
+        --primary:#8B5CF6;
+        --dark:#7C3AED;
+        --light:#A78BFA;
+        --pale:#EDE9FE;
+        --gold:#F59E0B;
+        --goldLight:#FDE68A;
+        --text:#1F2937;
+        --muted:rgba(107,114,128,1);
+      }
+      *{ box-sizing:border-box; }
+      body{
+        margin:0;
+        min-height:100vh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(1200px 700px at 85% 12%, rgba(253,230,138,0.40), rgba(253,230,138,0) 55%),
+          radial-gradient(900px 650px at 10% 88%, rgba(167,139,250,0.40), rgba(167,139,250,0) 55%),
+          linear-gradient(to bottom, #FAFAFF, #EEF2FF);
+        display:flex;
+        justify-content:center;
+        padding: 26px 14px 22px;
+      }
+      .bg-glow{
+        position:fixed;
+        inset:0;
+        pointer-events:none;
+        background:
+          radial-gradient(500px 260px at 50% -40px, rgba(124,58,237,0.12), rgba(124,58,237,0) 70%),
+          radial-gradient(340px 220px at -20px 55%, rgba(167,139,250,0.14), rgba(167,139,250,0) 70%);
+      }
+      .wrap{
+        width:100%;
+        max-width:420px;
+        position:relative;
+      }
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin: 2px 0 18px;
+      }
+      .logo{
+        width:44px;
+        height:44px;
+        border-radius:16px;
+        background: linear-gradient(135deg, rgba(167,139,250,0.35), rgba(139,92,246,0.25));
+        border: 1px solid rgba(139,92,246,0.18);
+        box-shadow:
+          0 18px 40px rgba(124,58,237,0.10),
+          0 2px 10px rgba(0,0,0,0.05);
+        backdrop-filter: blur(12px);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex: 0 0 auto;
+      }
+      .brandTitle{
+        display:flex;
+        flex-direction:column;
+        line-height:1.05;
+      }
+      .brandTitle strong{
+        font-size:24px;
+        letter-spacing:-0.6px;
+      }
+      .brandTitle span{
+        font-size:13px;
+        color:var(--muted);
+        font-weight:600;
+        margin-top:4px;
+      }
+      .glass{
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(167,139,250,0.18);
+        border-radius: 32px;
+        box-shadow:
+          0 30px 70px rgba(139,92,246,0.10),
+          0 10px 30px rgba(0,0,0,0.05);
+        backdrop-filter: blur(18px);
+        position:relative;
+        overflow:hidden;
+      }
+      .glassInner{
+        position:relative;
+        padding: 26px 22px;
+        text-align:center;
+      }
+      .title{
+        margin: 0 0 10px;
+        font-size:18px;
+        font-weight:800;
+        letter-spacing:-0.2px;
+        color:#2B1A5A;
+      }
+      .subtitle{
+        margin: 0;
+        font-size:14px;
+        color: var(--muted);
+        font-weight:700;
+        line-height:1.45;
+      }
+      .loading{
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 9999px;
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        background: rgba(237,233,254,0.55);
+        border: 1px solid rgba(139,92,246,0.12);
+        font-weight:800;
+        color:#5B21B6;
+      }
+      .dot{
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        background: var(--primary);
+        animation: pulse 1.05s infinite ease-in-out;
+      }
+      .dot:nth-child(2){ animation-delay: 0.12s; opacity:0.85;}
+      .dot:nth-child(3){ animation-delay: 0.24s; opacity:0.75;}
+      @keyframes pulse{
+        0%, 100% { transform: translateY(0); opacity: 0.65; }
+        50% { transform: translateY(-3px); opacity: 1; }
+      }
+      .storeBtn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        padding: 14px 18px;
+        width: 100%;
+        border-radius: 9999px;
+        text-decoration:none;
+        margin-top: 14px;
+        background: linear-gradient(135deg, var(--dark), var(--primary));
+        color:#fff;
+        font-weight:800;
+        box-shadow:
+          0 18px 50px rgba(124,58,237,0.18),
+          0 8px 22px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.25);
+      }
+      footer{
+        margin-top: 16px;
+        text-align:center;
+        font-size:12px;
+        color: rgba(107,114,128,1);
+        font-weight:700;
+      }
+      footer a{
+        color: rgba(124,58,237,1);
+        text-decoration:none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+      @media (max-width: 360px){
+        .glassInner{ padding: 22px 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <header class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#A78BFA"/>
+                <stop offset="1" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+            <circle cx="11" cy="11" r="10" fill="url(#qg)" opacity="0.18"/>
+            <path d="M15.9 16.4 12.7 13.2c-.5.3-1.1.5-1.7.5-2 0-3.6-1.6-3.6-3.6S9 6.5 11 6.5s3.6 1.6 3.6 3.6c0 .6-.2 1.2-.5 1.7l3.2 3.2-1.4 1.4Z" fill="#7C3AED"/>
+            <path d="M11 8.2c-1 0-1.8.8-1.8 1.8S10 11.8 11 11.8s1.8-.8 1.8-1.8-.8-1.8-1.8-1.8Z" fill="#8B5CF6"/>
+          </svg>
+        </div>
+        <div class="brandTitle">
+          <strong>DailyQ</strong>
+          <span>Referral</span>
+        </div>
+      </header>
+
+      <section class="glass">
+        <div class="glassInner">
+          <p class="title">Opening your referral…</p>
+          <p class="subtitle">If it doesn't open, we'll take you to the App Store.</p>
+          <div class="loading" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span>Redirecting</span>
+          </div>
+          <a class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ from the App Store">
+            Download DailyQ
+          </a>
+          <footer>© 2026 DailyQ · <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; Terms</a></footer>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        var appStoreUrl = "https://apps.apple.com/app/id6759645677";
+
+        function getInviteCode() {
+          var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
+          var parts = path.split("/").filter(Boolean);
+          var inviteIndex = parts.indexOf("invite");
+          if (inviteIndex !== -1 && parts[inviteIndex + 1]) return parts[inviteIndex + 1];
+          return parts[parts.length - 1] || "";
+        }
+
+        var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
+        var isInvitePath = path.indexOf("/invite/") === 0;
+        var code = getInviteCode();
+
+        // Only attempt deep-linking for referral-like paths.
+        var deepLink = isInvitePath ? ("dailyq://invite/" + encodeURIComponent(code)) : appStoreUrl;
+
+        var fallbackTimer = null;
+        var stopped = false;
+        function stopAndClear() {
+          if (stopped) return;
+          stopped = true;
+          if (fallbackTimer) window.clearTimeout(fallbackTimer);
+        }
+
+        fallbackTimer = window.setTimeout(function () {
+          stopAndClear();
+          window.location.replace(appStoreUrl);
+        }, 1500);
+
+        window.addEventListener("blur", stopAndClear, { once: true });
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "hidden") stopAndClear();
+        }, { passive: true });
+        window.addEventListener("pagehide", stopAndClear, { once: true });
+
+        try {
+          if (isInvitePath) {
+            window.location.href = deepLink;
+          } else {
+            window.location.replace(appStoreUrl);
+          }
+        } catch (e) {
+          window.location.replace(appStoreUrl);
+        }
+      })();
+    </script>
+  </body>
+</html>
+
