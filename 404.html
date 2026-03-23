@@ -244,7 +244,7 @@
         fallbackTimer = window.setTimeout(function () {
           stopAndClear();
           window.location.replace(appStoreUrl);
-        }, 1500);
+        }, 2500);
 
         window.addEventListener("blur", stopAndClear, { once: true });
         document.addEventListener("visibilitychange", function () {

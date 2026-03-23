@@ -367,7 +367,7 @@
         fallbackTimer = window.setTimeout(function () {
           stopAndClear();
           window.location.replace(appStoreUrl);
-        }, 1500);
+        }, 2500);
 
         // If the app opens (or tab visibility changes), stop the fallback.
         window.addEventListener("blur", stopAndClear, { once: true });
