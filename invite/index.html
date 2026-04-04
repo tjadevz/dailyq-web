@@ -280,7 +280,6 @@
     <div class="wrap">
       <header class="brand">
         <div class="logo" aria-hidden="true">
-          <!-- Simple DailyQ mark (web-only). -->
           <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
@@ -354,35 +353,58 @@
         }
 
         var code = getInviteCode();
-        var deepLink = "dailyq://invite/" + encodeURIComponent(code);
 
-        var fallbackTimer = null;
+        function copyToClipboardAndRedirect() {
+          if (!code || code.length !== 8) {
+            window.location.replace(appStoreUrl);
+            return;
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(function () {
+              window.location.replace(appStoreUrl);
+            }).catch(function () {
+              window.location.replace(appStoreUrl);
+            });
+          } else {
+            try {
+              var ta = document.createElement("textarea");
+              ta.value = code;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.focus();
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+            } catch (e) {}
+            window.location.replace(appStoreUrl);
+          }
+        }
+
+        var deepLink = "dailyq://invite/" + encodeURIComponent(code);
         var stopped = false;
-        function stopAndClear() {
+        var fallbackTimer = null;
+
+        function stopAndRedirect() {
           if (stopped) return;
           stopped = true;
           if (fallbackTimer) window.clearTimeout(fallbackTimer);
+          copyToClipboardAndRedirect();
         }
 
-        fallbackTimer = window.setTimeout(function () {
-          stopAndClear();
-          window.location.replace(appStoreUrl);
-        }, 2500);
+        fallbackTimer = window.setTimeout(stopAndRedirect, 2500);
 
-        // If the app opens (or tab visibility changes), stop the fallback.
-        window.addEventListener("blur", stopAndClear, { once: true });
+        window.addEventListener("blur", stopAndRedirect, { once: true });
         document.addEventListener("visibilitychange", function () {
-          if (document.visibilityState === "hidden") stopAndClear();
+          if (document.visibilityState === "hidden") stopAndRedirect();
         }, { passive: true });
-        window.addEventListener("pagehide", stopAndClear, { once: true });
+        window.addEventListener("pagehide", stopAndRedirect, { once: true });
 
         try {
           window.location.href = deepLink;
-        } catch (e) {
-          // If something blocks deep-link navigation, fallback will still happen.
-        }
+        } catch (e) {}
       })();
     </script>
   </body>
 </html>
-
