@@ -2,279 +2,338 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#8B5CF6" />
     <title>DailyQ · Referral</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
-      :root {
-        --primary: #8B5CF6;
-        --dark: #7C3AED;
-        --light: #A78BFA;
-        --soft: #DDD6FE;
-        --text: #1F2937;
-        --muted: #6B7280;
+      :root{
+        --primary:#8B5CF6;
+        --dark:#7C3AED;
+        --light:#A78BFA;
+        --pale:#EDE9FE;
+        --gold:#F0C040;
+        --goldDeep:#D4A830;
+        --goldLight:#FEF3C7;
+        --goldText:#92400E;
+        --text:#1F2937;
+        --muted:rgba(107,114,128,1);
       }
 
-      * { box-sizing: border-box; }
+      *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
 
-      body {
-        margin: 0;
-        min-height: 100vh;
+      html, body{ height:100%; }
+
+      body{
+        margin:0;
+        min-height:100vh;
+        min-height:100dvh;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        color: var(--text);
+        color:var(--text);
         background:
-          radial-gradient(220px 220px at 14% 22%, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0)),
-          radial-gradient(180px 180px at 88% 76%, rgba(167, 139, 250, 0.08), rgba(167, 139, 250, 0)),
-          linear-gradient(to bottom, #FAFAFF, #F2F4FF);
-        padding: 20px 14px 18px;
+          radial-gradient(1200px 700px at 85% 12%, rgba(253,230,138,0.40), rgba(253,230,138,0) 55%),
+          radial-gradient(900px 650px at 10% 88%, rgba(167,139,250,0.40), rgba(167,139,250,0) 55%),
+          linear-gradient(to bottom, #FAFAFF, #EEF2FF);
+        display:flex;
+        justify-content:center;
+        padding: calc(26px + env(safe-area-inset-top)) 16px calc(22px + env(safe-area-inset-bottom));
       }
 
-      .layout {
-        max-width: 420px;
-        margin: 0 auto;
+      .bg-glow{
+        position:fixed;
+        inset:0;
+        pointer-events:none;
+        background:
+          radial-gradient(500px 260px at 50% -40px, rgba(124,58,237,0.12), rgba(124,58,237,0) 70%),
+          radial-gradient(340px 220px at -20px 55%, rgba(167,139,250,0.14), rgba(167,139,250,0) 70%);
+        filter:saturate(1.05);
       }
 
-      .introSection {
-        padding: 14px 2px 12px;
-        text-align: center;
+      .wrap{
+        width:100%;
+        max-width:420px;
+        position:relative;
       }
 
-      .logoWrap {
-        position: relative;
-        width: 160px;
-        height: 160px;
-        margin: 0 auto 22px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin: 2px 0 18px;
       }
 
-      .haloOuter,
-      .haloInner {
-        position: absolute;
-        border-radius: 999px;
+      .logo{
+        width:48px;
+        height:48px;
+        flex: 0 0 auto;
+        filter: drop-shadow(0 8px 16px rgba(124,58,237,0.25));
       }
 
-      .haloOuter {
-        width: 160px;
-        height: 160px;
-        background: rgba(139, 92, 246, 0.12);
+      .logo img{
+        width:100%;
+        height:100%;
+        object-fit:contain;
+        display:block;
       }
 
-      .haloInner {
-        width: 130px;
-        height: 130px;
-        background: rgba(167, 139, 250, 0.15);
+      .brandTitle{
+        display:flex;
+        flex-direction:column;
+        line-height:1.05;
       }
 
-      .logoMark {
-        position: relative;
-        width: 110px;
-        height: 110px;
-        margin-top: 16px;
+      .brandTitle strong{
+        font-size:24px;
+        letter-spacing:-0.6px;
       }
 
-      .introTitle {
-        margin: 0 0 10px;
-        font-size: 32px;
-        line-height: 1.2;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.4px;
+      .brandTitle span{
+        font-size:13px;
+        color:var(--muted);
+        font-weight:600;
+        margin-top:4px;
       }
 
-      .introSub {
-        margin: 0;
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--muted);
-      }
-
-      .answersCard {
-        margin-top: 22px;
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 1);
+      .glass{
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(167,139,250,0.18);
         border-radius: 32px;
-        box-shadow: 0 20px 25px rgba(124, 58, 237, 0.15);
-        backdrop-filter: blur(10px);
-        padding: 20px;
+        box-shadow:
+          0 30px 70px rgba(139,92,246,0.10),
+          0 10px 30px rgba(0,0,0,0.05);
+        backdrop-filter: blur(18px);
+        position:relative;
+        overflow:hidden;
       }
 
-      .answersHeader {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
+      .glass:before{
+        content:"";
+        position:absolute;
+        inset:-2px;
+        background:
+          radial-gradient(600px 260px at 20% 0%, rgba(167,139,250,0.18), rgba(167,139,250,0) 55%),
+          radial-gradient(480px 220px at 110% 20%, rgba(124,58,237,0.14), rgba(124,58,237,0) 60%);
+        pointer-events:none;
       }
 
-      .answersHeader svg { flex: 0 0 auto; }
-
-      .answersLabel {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--primary);
+      .glassInner{
+        position:relative;
+        padding: 26px 22px;
       }
 
-      .questionPrompt {
-        margin: 0 0 14px;
-        font-size: 15px;
-        line-height: 22px;
-        font-weight: 700;
-        color: #374151;
-        text-align: left;
+      .question{
+        font-size:18px;
+        text-align:center;
+        font-weight:700;
+        letter-spacing:-0.2px;
+        margin: 0 0 18px;
+        color: #2B1A5A;
       }
 
-      .timeline {
-        display: grid;
-        gap: 14px;
+      .timeline{
+        display:flex;
+        flex-direction:column;
+        gap:14px;
       }
 
-      .answerRow {
-        background: rgba(243, 232, 255, 0.6);
-        border-radius: 16px;
-        border: 1px solid rgba(139, 92, 246, 0.15);
-        padding: 14px 16px;
+      .answerRow{
+        background: rgba(237,233,254,0.55);
+        border: 1px solid rgba(139,92,246,0.12);
+        border-radius: 22px;
+        padding: 14px 14px;
       }
 
-      .yearBadge {
-        display: inline-block;
-        margin-bottom: 6px;
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--primary);
+      .answerTop{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:8px;
       }
 
-      .answerText {
+      .yearBadge{
+        font-size:12px;
+        font-weight:800;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        color:#5B21B6;
+        background: rgba(167,139,250,0.22);
+        border: 1px solid rgba(167,139,250,0.30);
+        padding: 6px 10px;
+        border-radius: 9999px;
+      }
+
+      .answerText{
+        margin:0;
+        font-size:16px;
+        line-height:1.4;
+        color: rgba(31,41,55,1);
+        font-weight:600;
+      }
+
+      .belowCard{
+        margin-top: 18px;
+        text-align:center;
+      }
+
+      h2{
+        margin: 0 0 8px;
+        font-size:22px;
+        letter-spacing:-0.6px;
+        color: #2B1A5A;
+      }
+
+      .subline{
         margin: 0;
-        font-size: 15px;
-        line-height: 22px;
-        color: #4B5563;
-      }
-
-      .referralPill {
-        margin: 16px auto 0;
-        width: fit-content;
-        max-width: 100%;
-        border-radius: 999px;
-        border: 1px solid rgba(251, 191, 36, 0.4);
-        background: linear-gradient(to bottom right, #FEF3C7, #F0C040, #D4A830);
-        color: #92400E;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 1.2;
-        padding: 10px 14px;
-        box-shadow: 0 4px 12px rgba(240, 192, 64, 0.22);
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .ctaWrap {
-        margin-top: 20px;
-      }
-
-      .storeBtn {
-        display: inline-flex;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        border-radius: 999px;
-        min-height: 56px;
-        padding: 16px 26px;
-        font-size: 16px;
-        font-weight: 600;
-        color: #FFF;
-        background: linear-gradient(to right, #7C3AED, #6D28D9);
-        box-shadow: 0 20px 56px rgba(139, 92, 246, 0.35);
-      }
-
-      .storeBtn:active { opacity: 0.9; }
-
-      .legal {
-        margin-top: 16px;
-        text-align: center;
-        font-size: 12px;
+        font-size:15px;
         color: var(--muted);
-        font-weight: 700;
+        font-weight:600;
+        line-height:1.45;
       }
 
-      .legal a {
-        color: var(--dark);
-        text-decoration: none;
-        border-bottom: 1px solid rgba(124, 58, 237, 0.35);
+      .goldBadge{
+        margin: 18px auto 14px;
+        width: fit-content;
+        max-width:100%;
+        padding: 10px 14px;
+        border-radius: 9999px;
+        background: linear-gradient(to bottom right, var(--goldLight), var(--gold), var(--goldDeep));
+        border: 1px solid rgba(240,192,64,0.4);
+        box-shadow:
+          0 14px 34px rgba(240,192,64,0.22),
+          0 4px 14px rgba(0,0,0,0.06);
+        color: var(--goldText);
+        font-weight:800;
+        font-size:14px;
+        display:flex;
+        align-items:center;
+        gap:10px;
       }
 
-      @media (max-width: 360px) {
-        .introTitle { font-size: 28px; }
-        .answersCard { padding: 16px; }
+      .goldBadge .crown{
+        font-size:16px;
+        line-height:1;
+      }
+
+      .storeCta{
+        display:flex;
+        justify-content:center;
+        margin-top: 14px;
+      }
+
+      .storeBtn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        min-height:56px;
+        padding: 14px 20px;
+        width: 100%;
+        border-radius: 9999px;
+        text-decoration:none;
+        background: linear-gradient(135deg, var(--dark), var(--primary));
+        color:#fff;
+        font-size:16px;
+        font-weight:800;
+        box-shadow:
+          0 18px 50px rgba(124,58,237,0.18),
+          0 8px 22px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.25);
+      }
+
+      .storeBtn:active{ transform: translateY(1px); opacity: 0.94; }
+
+      .storeBtn .badgeArrow{
+        width: 28px;
+        height: 28px;
+        border-radius: 9999px;
+        background: rgba(255,255,255,0.18);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border: 1px solid rgba(255,255,255,0.18);
+        flex: 0 0 auto;
+      }
+
+      footer{
+        margin-top: 18px;
+        text-align:center;
+        font-size:12px;
+        color: rgba(107,114,128,1);
+        font-weight:700;
+      }
+
+      footer a{
+        color: rgba(124,58,237,1);
+        text-decoration:none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+
+      @media (max-width: 360px){
+        .glassInner{ padding: 22px 16px; }
+        .question{ font-size:16px; }
+        h2{ font-size:20px; }
       }
     </style>
   </head>
   <body>
-    <main class="layout">
-      <section class="introSection">
-        <div class="logoWrap" aria-hidden="true">
-          <div class="haloOuter"></div>
-          <div class="haloInner"></div>
-          <svg class="logoMark" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#A78BFA"></stop>
-                <stop offset="1" stop-color="#8B5CF6"></stop>
-              </linearGradient>
-            </defs>
-            <circle cx="60" cy="60" r="50" fill="url(#qg)" opacity="0.22"></circle>
-            <path d="M84 88 67 71c-3 2-6 3-10 3-11 0-20-9-20-20s9-20 20-20 20 9 20 20c0 4-1 7-3 10l17 17-7 7Z" fill="#7C3AED"></path>
-            <path d="M58 44c-6 0-10 4-10 10s4 10 10 10 10-4 10-10-4-10-10-10Z" fill="#8B5CF6"></path>
-          </svg>
+    <div class="bg-glow" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <header class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="../assets/logo.png" width="48" height="48" alt="" loading="eager" />
         </div>
-        <h1 class="introTitle">Welcome to DailyQ</h1>
-        <p class="introSub">Who were you this time last year?</p>
+        <div class="brandTitle">
+          <strong>DailyQ</strong>
+          <span>One question a day</span>
+        </div>
+      </header>
+
+      <section class="glass">
+        <div class="glassInner">
+          <div class="question">Are you happy in love right now?</div>
+
+          <div class="timeline">
+            <div class="answerRow">
+              <div class="answerTop">
+                <div class="yearBadge">2025</div>
+              </div>
+              <p class="answerText">Single for a while now, been dating but kind of done with it honestly.</p>
+            </div>
+
+            <div class="answerRow">
+              <div class="answerTop">
+                <div class="yearBadge">2026</div>
+              </div>
+              <p class="answerText">YES!!</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section class="answersCard">
-        <div class="answersHeader">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none">
-            <path d="M12 2l3.2 6.5 7.1 1-5.1 5 1.2 7-6.4-3.4-6.4 3.4 1.2-7-5.1-5 7.1-1L12 2Z" fill="#7C3AED"></path>
-          </svg>
-          <span class="answersLabel">Your Past Answers</span>
-        </div>
-        <p class="questionPrompt">Are you happy in love right now?</p>
+      <div class="belowCard">
+        <h2>Who were you this time last year?</h2>
+        <p class="subline">One question a day. A year later, see your answer.</p>
 
-        <div class="timeline">
-          <article class="answerRow">
-            <span class="yearBadge">2025</span>
-            <p class="answerText">Single for a while now, been dating but kind of done with it honestly.</p>
-          </article>
-          <article class="answerRow">
-            <span class="yearBadge">2026</span>
-            <p class="answerText">YES!!</p>
-          </article>
-        </div>
-
-        <div class="referralPill" role="note" aria-label="Referral joker badge">
-          <span>👑</span>
+        <div class="goldBadge" role="note" aria-label="Referral joker badge">
+          <span class="crown">👑</span>
           <span>Your friend sent you a free joker</span>
         </div>
 
-        <div class="ctaWrap">
+        <div class="storeCta">
           <a class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ from the App Store">
-            Download DailyQ
+            <span class="badgeArrow" aria-hidden="true">↓</span>
+            <span>Download DailyQ</span>
           </a>
         </div>
-      </section>
 
-      <footer class="legal">
-        © 2026 DailyQ ·
-        <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; Terms</a>
-      </footer>
-    </main>
+        <footer>© 2026 DailyQ · <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; Terms</a></footer>
+      </div>
+    </div>
 
     <script>
       (function () {
@@ -288,68 +347,74 @@
           return parts[parts.length - 1] || "";
         }
 
-        var code = getInviteCode();
-        var deepLink = "dailyq://invite/" + encodeURIComponent(code);
+        var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
+        var isInvitePath = path.indexOf("/invite/") === 0 || path.indexOf("/invite") === 0;
+        var code = isInvitePath ? getInviteCode() : "";
 
         // Matches server-generated referral codes (see generate_referral_code): 8 chars, a-z0-9.
-        var REFERRAL_CODE_PATTERN = /^[a-z0-9]{8}$/;
-        var isValidReferralCode = REFERRAL_CODE_PATTERN.test(code);
+        var REFERRAL_CODE_PATTERN = /^[a-z0-9]{8}$/i;
+        var isValidReferralCode = isInvitePath && REFERRAL_CODE_PATTERN.test(code);
 
         // Best-effort: if the app isn't installed, this is the only way the referral code can
         // survive the App Store round-trip so the fresh install can claim it (deferred deep link).
         // The app reads it back out of the clipboard on first launch.
-        function copyReferralCodeToClipboard() {
-          if (!isValidReferralCode) return;
-          try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              navigator.clipboard.writeText(code).catch(function () {});
-            }
-          } catch (e) {
-            // non-fatal: clipboard write can fail without an active user gesture
+        function copyToClipboardAndRedirect() {
+          if (!isValidReferralCode) {
+            window.location.replace(appStoreUrl);
+            return;
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(function () {
+              window.location.replace(appStoreUrl);
+            }).catch(function () {
+              window.location.replace(appStoreUrl);
+            });
+          } else {
+            try {
+              var ta = document.createElement("textarea");
+              ta.value = code;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.focus();
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+            } catch (e) {}
+            window.location.replace(appStoreUrl);
           }
         }
 
-        var fallbackTimer = null;
+        var deepLink = isInvitePath ? ("dailyq://invite/" + encodeURIComponent(code)) : appStoreUrl;
         var stopped = false;
-        function stopAndClear() {
+        var fallbackTimer = null;
+
+        function stopAndRedirect() {
           if (stopped) return;
           stopped = true;
           if (fallbackTimer) window.clearTimeout(fallbackTimer);
+          copyToClipboardAndRedirect();
         }
 
-        var isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent);
-        var delayMs = isIOS ? 6500 : 2500;
+        fallbackTimer = window.setTimeout(stopAndRedirect, 2500);
 
-        fallbackTimer = window.setTimeout(function () {
-          stopAndClear();
-          window.location.replace(appStoreUrl);
-        }, delayMs);
-
-        // If the app opens (or tab visibility changes), stop the fallback.
-        window.addEventListener("blur", stopAndClear, { once: true });
+        window.addEventListener("blur", stopAndRedirect, { once: true });
         document.addEventListener("visibilitychange", function () {
-          if (document.visibilityState === "hidden") stopAndClear();
+          if (document.visibilityState === "hidden") stopAndRedirect();
         }, { passive: true });
-        window.addEventListener("pagehide", stopAndClear, { once: true });
-
-        // Attempt the clipboard write while we still have the user activation carried over
-        // from the tap that opened this page (same task as the deep-link attempt below).
-        copyReferralCodeToClipboard();
-
-        // Guaranteed path: a direct tap on the store button is always a real user gesture,
-        // so the clipboard write here will succeed even if the best-effort one above didn't.
-        var storeBtn = document.querySelector(".storeBtn");
-        if (storeBtn) {
-          storeBtn.addEventListener("click", copyReferralCodeToClipboard);
-        }
+        window.addEventListener("pagehide", stopAndRedirect, { once: true });
 
         try {
-          window.location.href = deepLink;
+          if (isInvitePath) {
+            window.location.href = deepLink;
+          } else {
+            window.location.replace(appStoreUrl);
+          }
         } catch (e) {
-          // If something blocks deep-link navigation, fallback will still happen.
+          window.location.replace(appStoreUrl);
         }
       })();
     </script>
   </body>
 </html>
-
