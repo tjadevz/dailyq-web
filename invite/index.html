@@ -291,6 +291,24 @@
         var code = getInviteCode();
         var deepLink = "dailyq://invite/" + encodeURIComponent(code);
 
+        // Matches server-generated referral codes (see generate_referral_code): 8 chars, a-z0-9.
+        var REFERRAL_CODE_PATTERN = /^[a-z0-9]{8}$/;
+        var isValidReferralCode = REFERRAL_CODE_PATTERN.test(code);
+
+        // Best-effort: if the app isn't installed, this is the only way the referral code can
+        // survive the App Store round-trip so the fresh install can claim it (deferred deep link).
+        // The app reads it back out of the clipboard on first launch.
+        function copyReferralCodeToClipboard() {
+          if (!isValidReferralCode) return;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(code).catch(function () {});
+            }
+          } catch (e) {
+            // non-fatal: clipboard write can fail without an active user gesture
+          }
+        }
+
         var fallbackTimer = null;
         var stopped = false;
         function stopAndClear() {
@@ -313,6 +331,17 @@
           if (document.visibilityState === "hidden") stopAndClear();
         }, { passive: true });
         window.addEventListener("pagehide", stopAndClear, { once: true });
+
+        // Attempt the clipboard write while we still have the user activation carried over
+        // from the tap that opened this page (same task as the deep-link attempt below).
+        copyReferralCodeToClipboard();
+
+        // Guaranteed path: a direct tap on the store button is always a real user gesture,
+        // so the clipboard write here will succeed even if the best-effort one above didn't.
+        var storeBtn = document.querySelector(".storeBtn");
+        if (storeBtn) {
+          storeBtn.addEventListener("click", copyReferralCodeToClipboard);
+        }
 
         try {
           window.location.href = deepLink;
