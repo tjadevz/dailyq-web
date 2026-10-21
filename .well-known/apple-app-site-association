@@ -4,7 +4,9 @@
     "details": [
       {
         "appID": "JLKA6S8UWH.com.tjade.dailyq",
-        "paths": ["/invite/*"]
+        "appIDs": ["JLKA6S8UWH.com.tjade.dailyq"],
+        "paths": ["/invite/*"],
+        "components": [{ "/": "/invite/*" }]
       }
     ]
   }
