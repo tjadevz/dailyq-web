@@ -6,6 +6,17 @@
     <meta name="theme-color" content="#FAFAFF" />
     <title>DailyQ · Referral</title>
 
+    <meta name="description" content="Answer one question a day, and see who you were a year from now. Tap to claim your free joker." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DailyQ" />
+    <meta property="og:title" content="You got a free DailyQ joker 👑" />
+    <meta property="og:description" content="Answer one question a day, and see who you were a year from now. Tap to claim it." />
+    <meta property="og:image" content="https://dailyqapp.com/assets/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="You got a free DailyQ joker 👑" />
+    <meta name="twitter:description" content="Answer one question a day, and see who you were a year from now. Tap to claim it." />
+    <meta name="twitter:image" content="https://dailyqapp.com/assets/logo.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -144,6 +155,17 @@
         text-decoration:none;
         border-bottom: 1px solid rgba(124,58,237,0.35);
       }
+
+      .openLink{
+        margin-top: 18px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--dark);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+
+      .openLink[hidden]{ display:none; }
     </style>
   </head>
   <body>
@@ -158,9 +180,11 @@
         <span>Your friend sent you a free joker</span>
       </div>
 
-      <a class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ from the App Store">
+      <a id="storeBtn" class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ from the App Store">
         Download DailyQ
       </a>
+
+      <a id="openBtn" class="openLink" href="dailyq://" hidden>I already have DailyQ</a>
 
       <footer>© 2026 DailyQ · <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; Terms</a></footer>
     </div>
@@ -168,82 +192,59 @@
     <script>
       (function () {
         var appStoreUrl = "https://apps.apple.com/app/id6759645677";
-
-        function getInviteCode() {
-          var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
-          var parts = path.split("/").filter(Boolean);
-          var inviteIndex = parts.indexOf("invite");
-          if (inviteIndex !== -1 && parts[inviteIndex + 1]) return parts[inviteIndex + 1];
-          return parts[parts.length - 1] || "";
-        }
-
-        var path = (window.location && window.location.pathname) ? String(window.location.pathname) : "";
-        var isInvitePath = path.indexOf("/invite/") === 0 || path.indexOf("/invite") === 0;
-        var code = isInvitePath ? getInviteCode() : "";
+        var path = String((window.location && window.location.pathname) || "");
+        var match = path.match(/^\/invite\/([^\/?#]+)/);
+        var code = match ? decodeURIComponent(match[1]).trim().toLowerCase() : "";
 
         // Matches server-generated referral codes (see generate_referral_code): 8 chars, a-z0-9.
-        var REFERRAL_CODE_PATTERN = /^[a-z0-9]{8}$/i;
-        var isValidReferralCode = isInvitePath && REFERRAL_CODE_PATTERN.test(code);
+        var isValidReferralCode = /^[a-z0-9]{8}$/.test(code);
 
-        // Best-effort: if the app isn't installed, this is the only way the referral code can
-        // survive the App Store round-trip so the fresh install can claim it (deferred deep link).
-        // The app reads it back out of the clipboard on first launch.
-        function copyToClipboardAndRedirect() {
-          if (!isValidReferralCode) {
-            window.location.replace(appStoreUrl);
-            return;
-          }
-
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(code).then(function () {
-              window.location.replace(appStoreUrl);
-            }).catch(function () {
-              window.location.replace(appStoreUrl);
-            });
-          } else {
-            try {
-              var ta = document.createElement("textarea");
-              ta.value = code;
-              ta.style.position = "fixed";
-              ta.style.opacity = "0";
-              document.body.appendChild(ta);
-              ta.focus();
-              ta.select();
-              document.execCommand("copy");
-              document.body.removeChild(ta);
-            } catch (e) {}
-            window.location.replace(appStoreUrl);
-          }
-        }
-
-        var deepLink = isInvitePath ? ("dailyq://invite/" + encodeURIComponent(code)) : appStoreUrl;
-        var stopped = false;
-        var fallbackTimer = null;
-
-        function stopAndRedirect() {
-          if (stopped) return;
-          stopped = true;
-          if (fallbackTimer) window.clearTimeout(fallbackTimer);
-          copyToClipboardAndRedirect();
-        }
-
-        fallbackTimer = window.setTimeout(stopAndRedirect, 2500);
-
-        window.addEventListener("blur", stopAndRedirect, { once: true });
-        document.addEventListener("visibilitychange", function () {
-          if (document.visibilityState === "hidden") stopAndRedirect();
-        }, { passive: true });
-        window.addEventListener("pagehide", stopAndRedirect, { once: true });
-
-        try {
-          if (isInvitePath) {
-            window.location.href = deepLink;
-          } else {
-            window.location.replace(appStoreUrl);
-          }
-        } catch (e) {
+        // Any other unknown path on the site (this file is also GitHub Pages' 404): go to the store.
+        if (path.indexOf("/invite") !== 0) {
           window.location.replace(appStoreUrl);
+          return;
         }
+        if (!isValidReferralCode) return;
+
+        // No automatic redirects or scheme launches on load: Safari shows an "Open in DailyQ?"
+        // sheet for those, the sheet blurs the page, and the old blur handler then sent people
+        // with the app installed to the App Store. When the app is installed the universal link
+        // opens it before this page ever loads, so this page is only for people without the app.
+
+        // Copying needs a user tap in Safari, so it happens in the button's click handler.
+        // The fresh install reads the code back from the clipboard on first launch.
+        function copyCode() {
+          var copied = false;
+          try {
+            var ta = document.createElement("textarea");
+            ta.value = code;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.top = "0";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.setSelectionRange(0, code.length);
+            copied = document.execCommand("copy");
+            document.body.removeChild(ta);
+          } catch (e) {}
+          if (copied || !navigator.clipboard || !navigator.clipboard.writeText) {
+            return Promise.resolve();
+          }
+          return navigator.clipboard.writeText(code).catch(function () {});
+        }
+
+        var storeBtn = document.getElementById("storeBtn");
+        storeBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          var go = function () { window.location.href = appStoreUrl; };
+          var t = window.setTimeout(go, 600);
+          copyCode().then(function () { window.clearTimeout(t); go(); });
+        });
+
+        var openBtn = document.getElementById("openBtn");
+        openBtn.href = "dailyq://invite/" + encodeURIComponent(code);
+        openBtn.hidden = false;
       })();
     </script>
   </body>
