@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAFAFF" />
+    <title>DailyQ · Gratis joker</title>
+
+    <meta name="description" content="Beantwoord elke dag één vraag en zie over een jaar wie je was. Tik om je gratis joker te claimen." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DailyQ" />
+    <meta property="og:url" content="https://dailyqapp.com/doe-mee/" />
+    <meta property="og:title" content="Je hebt een gratis DailyQ-joker gekregen 👑" />
+    <meta property="og:description" content="Beantwoord elke dag één vraag en zie over een jaar wie je was. Tik om je gratis joker te claimen." />
+    <meta property="og:image" content="https://dailyqapp.com/assets/logo.png" />
+    <meta property="og:image:width" content="240" />
+    <meta property="og:image:height" content="240" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Je hebt een gratis DailyQ-joker gekregen 👑" />
+    <meta name="twitter:description" content="Beantwoord elke dag één vraag en zie over een jaar wie je was. Tik om je gratis joker te claimen." />
+    <meta name="twitter:image" content="https://dailyqapp.com/assets/logo.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+      :root{
+        --primary:#8B5CF6;
+        --dark:#7C3AED;
+        --gold:#F0C040;
+        --goldDeep:#D4A830;
+        --goldLight:#FEF3C7;
+        --goldText:#92400E;
+        --text:#1F2937;
+        --muted:rgba(107,114,128,1);
+      }
+
+      *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+      html, body{ height:100%; }
+
+      body{
+        margin:0;
+        min-height:100vh;
+        min-height:100dvh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color:var(--text);
+        /* Same soft wash as the app's Today tab: pale near-white base, warm gold
+           glow top-right, violet wash pooling toward the bottom. No hard bands,
+           no blur, no card. */
+        background:
+          radial-gradient(900px 600px at 88% 6%, rgba(253,230,138,0.40), rgba(253,230,138,0) 55%),
+          radial-gradient(1000px 700px at 8% 96%, rgba(216,180,254,0.35), rgba(216,180,254,0) 55%),
+          #FAFAFF;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding: calc(28px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));
+      }
+
+      .wrap{
+        width:100%;
+        max-width:380px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+      }
+
+      .logo{
+        width:76px;
+        height:76px;
+        border-radius: 22%;
+        overflow:hidden;
+        box-shadow: 0 10px 26px rgba(124,58,237,0.18);
+        margin-bottom:14px;
+      }
+
+      .logo img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+      }
+
+      .brand{
+        font-size:22px;
+        font-weight:800;
+        letter-spacing:-0.4px;
+        color:var(--text);
+        margin: 0 0 40px;
+      }
+
+      .goldBadge{
+        width: fit-content;
+        max-width:100%;
+        padding: 12px 18px;
+        border-radius: 9999px;
+        background: linear-gradient(to bottom right, var(--goldLight), var(--gold), var(--goldDeep));
+        border: 1px solid rgba(240,192,64,0.4);
+        box-shadow:
+          0 14px 34px rgba(240,192,64,0.22),
+          0 4px 14px rgba(0,0,0,0.06);
+        color: var(--goldText);
+        font-weight:800;
+        font-size:15px;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom: 28px;
+      }
+
+      .goldBadge .crown{
+        font-size:18px;
+        line-height:1;
+      }
+
+      .storeBtn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        min-height:52px;
+        padding: 14px 28px;
+        width: 100%;
+        border-radius: 9999px;
+        text-decoration:none;
+        position:relative;
+        overflow:hidden;
+        background: linear-gradient(135deg, rgba(139,92,246,0.96), rgba(124,58,237,0.96));
+        color:#fff;
+        font-size:16px;
+        font-weight:700;
+        box-shadow: 0 10px 24px rgba(139,92,246,0.3);
+      }
+
+      .storeBtn:before{
+        content:"";
+        position:absolute;
+        top:0; left:0; right:0;
+        height:50%;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0));
+        pointer-events:none;
+      }
+
+      .storeBtn:active{ opacity: 0.92; }
+
+      footer{
+        margin-top: 28px;
+        text-align:center;
+        font-size:12px;
+        color: var(--muted);
+        font-weight:600;
+      }
+
+      footer a{
+        color: var(--dark);
+        text-decoration:none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+
+      .openLink{
+        margin-top: 18px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--dark);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(124,58,237,0.35);
+      }
+
+      .openLink[hidden]{ display:none; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="logo" aria-hidden="true">
+        <img src="/assets/logo.png" width="76" height="76" alt="" loading="eager" />
+      </div>
+      <div class="brand">DailyQ</div>
+
+      <div class="goldBadge" role="note" aria-label="Referral joker badge">
+        <span class="crown">👑</span>
+        <span>Je vriend(in) gaf je een gratis joker</span>
+      </div>
+
+      <a id="storeBtn" class="storeBtn" href="https://apps.apple.com/app/id6759645677" aria-label="Download DailyQ">
+        Download DailyQ
+      </a>
+
+      <a id="openBtn" class="openLink" href="dailyq://" hidden>Ik heb DailyQ al</a>
+
+      <footer>© 2026 DailyQ · <a href="https://tjadevz.github.io/dailyq-legal/" target="_blank" rel="noopener noreferrer">Privacy &amp; voorwaarden</a></footer>
+    </div>
+
+    <script>
+      (function () {
+        var appStoreUrl = "https://apps.apple.com/app/id6759645677";
+        // Shared links look like /join/?c=<code> (a real page, so WhatsApp & co. get a 200 and
+        // render the preview card). Older /invite/<code> links are served by 404.html.
+        var match = String(window.location.search || "").match(/[?&]c=([^&#]+)/);
+        var code = match ? decodeURIComponent(match[1]).trim().toLowerCase() : "";
+
+        // Matches server-generated referral codes (see generate_referral_code): 8 chars, a-z0-9.
+        if (!/^[a-z0-9]{8}$/.test(code)) return;
+
+        // No automatic redirects or scheme launches on load: Safari would show an
+        // "Open in DailyQ?" sheet. Everything happens on a tap.
+
+        // Copying needs a user tap in Safari, so it happens in the button's click handler.
+        // The fresh install reads the code back from the clipboard on first launch.
+        function copyCode() {
+          var copied = false;
+          try {
+            var ta = document.createElement("textarea");
+            ta.value = code;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.top = "0";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.setSelectionRange(0, code.length);
+            copied = document.execCommand("copy");
+            document.body.removeChild(ta);
+          } catch (e) {}
+          if (copied || !navigator.clipboard || !navigator.clipboard.writeText) {
+            return Promise.resolve();
+          }
+          return navigator.clipboard.writeText(code).catch(function () {});
+        }
+
+        var storeBtn = document.getElementById("storeBtn");
+        storeBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          var go = function () { window.location.href = appStoreUrl; };
+          var t = window.setTimeout(go, 600);
+          copyCode().then(function () { window.clearTimeout(t); go(); });
+        });
+
+        // People who already have the app land here too (this path is not a universal link),
+        // so they open the app with the custom scheme, which every app version handles.
+        var openBtn = document.getElementById("openBtn");
+        openBtn.href = "dailyq://invite/" + encodeURIComponent(code);
+        openBtn.hidden = false;
+      })();
+    </script>
+  </body>
+</html>
